@@ -17,7 +17,9 @@ struct Set {
     int sizeset = 0;
 
     Set();
+    Set(const Set<T>& other); // конструктор копирования(для вложения множества в структуру)
     ~Set();
+    Set<T>& operator=(const Set<T>& other); // оператор присваивания(для вложения множества в структуру))
 
     int hashFunction(const T& value);
     void insert(const T& value);

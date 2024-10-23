@@ -12,6 +12,17 @@ Set<T>::Set() {
 }
 
 template<typename T>
+Set<T>::Set(const Set<T>& other) : Set() {
+    for (int i = 0; i < TABLE_SIZE; ++i) {
+        NodeS<T>* current = other.table[i];
+        while (current) {
+            insert(current->data); // Вставляем элементы из другого множества
+            current = current->next;
+        }
+    }
+}
+
+template<typename T>
 Set<T>::~Set() {
     for (int i = 0; i < TABLE_SIZE; ++i) {
         NodeS<T>* current = table[i];
@@ -21,6 +32,24 @@ Set<T>::~Set() {
             delete toDelete;
         }
     }
+}
+
+template<typename T>
+Set<T>& Set<T>::operator=(const Set<T>& other) {
+    if (this != &other) {
+        // Удаляем текущее состояние
+        this->~Set();
+        
+        // Копируем элементы из другого множества
+        for (int i = 0; i < TABLE_SIZE; ++i) {
+            NodeS<T>* current = other.table[i];
+            while (current) {
+                insert(current->data);
+                current = current->next;
+            }
+        }
+    }
+    return *this;
 }
 
 template<typename T>
